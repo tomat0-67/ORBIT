@@ -53,7 +53,7 @@ export function DevPanel() {
           </div>)}
         </div>
         <p className="task-storage-note">Lecture de la liste uniquement. ORBIT ne modifie ni n’envoie les fichiers.</p>
-      </> : <div className="dev-first-open"><span className="empty-mark"><span aria-hidden="true">⌘</span></span><h3>Ton code reste sur ton disque.</h3><p>La première version affiche les éléments du dossier choisi. Elle ne modifie pas tes projets et ne les envoie pas vers un serveur.</p><span className="local-badge"><i /> Accès demandé dossier par dossier</span></div>}
+      </> : <div className="dev-first-open"><h3>Aucun dossier ouvert</h3><p>Choisis un dossier pour afficher la liste de ses éléments. ORBIT ne lit pas le contenu des fichiers.</p></div>}
     </section>
   )
 }
