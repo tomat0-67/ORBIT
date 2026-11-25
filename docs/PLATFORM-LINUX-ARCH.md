@@ -2,7 +2,7 @@
 
 ## Périmètre
 
-Arch Linux est la première cible desktop de validation. Il s’agit d’un ordre de prototypage, pas d’une promesse de compatibilité avec toutes les distributions Linux. La cible envisagée est un shell desktop Tauri 2 avec le frontend TypeScript/React/Vite défini par l’architecture. Le dépôt ne contient pas encore d’application : aucune installation, compilation, interface native ou intégration de fichiers n’est actuellement vérifiée.
+Arch Linux est la première cible desktop de validation. Le dépôt comprend maintenant une application React/Vite et un shell Tauri 2. La compilation release native réussit sur l’hôte Arch utilisé ici; l’ouverture graphique de l’application et la génération de paquets restent à vérifier. Cela ne vaut pas promesse de compatibilité pour toutes les installations Arch ou distributions Linux.
 
 ## Prérequis de développement
 
@@ -23,30 +23,49 @@ sudo pacman -S --needed \
   xdotool
 ```
 
-Installer également Rust via rustup et Node.js (frontend JavaScript). pnpm sera activé via Corepack si la version de Node installée le fournit. Les versions exactes seront fixées dans le dépôt au moment du prototype, plutôt que présumées ici.
+Installer également Rust stable (le plugin File System actuel requiert Rust 1.90 ou plus récent), Node.js 22.12 ou plus récent et pnpm 11.25. Le workspace utilise un lockfile pnpm et un Cargo.lock.
 
-Ces paquets sont des prérequis de développement Tauri, pas une liste finale de dépendances d’exécution ou de paquets ORBIT. Examiner les dépendances réellement utilisées et les paquets générés avant toute distribution.
+## Démarrer
 
-## Premier prototype attendu
+```sh
+pnpm install
+pnpm desktop:dev
+```
 
-Le prototype Linux devra démontrer avant d’être déclaré compatible :
+Le frontend navigateur seul se lance avec `pnpm dev`. Le sélecteur de dossier DEV et sa liste locale ne sont disponibles que dans la fenêtre desktop.
 
-1. Installation reproductible des outils et dépendances sur une installation Arch à jour.
-2. Démarrage du frontend et lancement du shell Tauri en développement.
-3. Compilation release locale avec WebKitGTK 4.1.
-4. Ouverture, affichage et fermeture propres de la fenêtre sous un environnement graphique Arch pris en charge.
-5. Dépendances d’exécution identifiées à partir du paquet produit.
-6. Vérification des chemins et permissions avant d’ajouter l’accès aux fichiers de projets DEV.
+## Compiler
 
-Le prototype ne doit pas demander de privilèges root à l’exécution. Aucun dossier utilisateur ni projet ne doit être parcouru ou modifié automatiquement.
+```sh
+pnpm typecheck
+pnpm test
+pnpm build
+pnpm desktop:compile
+```
+
+`desktop:compile` produit un binaire Rust release sans créer de paquet. `pnpm desktop:build` demande à Tauri les bundles AppImage et DEB configurés; cela n’implique pas une publication AUR.
+
+## Résultats vérifiés
+
+- Hôte : Arch Linux rolling; WebKitGTK 4.1 détecté en version 2.54.3.
+- Typecheck web : réussi.
+- Tests Vitest : 8 réussis.
+- Build web : réussi.
+- Compilation native release : réussie, binaire `apps/desktop/src-tauri/target/release/orbit` produit.
+- Paquetage AppImage/DEB : compilation native terminée, puis échec avec `Read-only file system (os error 30)` dans l’environnement de travail.
+- Démarrage de la fenêtre et validation du dialogue graphique : non exécutés.
+
+## Sécurité des fichiers
+
+Le frontend Tauri peut ouvrir le sélecteur de dossiers et lire les entrées du dossier explicitement choisi. Il n’a pas de permission d’écriture, ne lit pas les contenus des fichiers et ne transmet pas ces noms. Le choix est temporaire et doit être refait après redémarrage.
 
 ## Distribution
 
-Le format de distribution Arch reste à choisir après une compilation reproductible. Évaluer un paquet Arch maintenable et les autres formats Linux seulement selon les besoins observés. La publication sur l’AUR n’est pas incluse dans cette étape ; elle exigera un paquet vérifié, des dépendances et mises à jour maintenables, ainsi qu’une autorisation de publication distincte.
-
-Ne pas annoncer Arch comme plateforme supportée avant d’avoir exécuté les étapes de validation et documenté la version du système, le bureau testé, les dépendances et le résultat.
+Le format Arch reste à décider après le test de lancement et la génération reproductible d’un paquet. La publication sur l’AUR n’est pas incluse; elle demandera un paquet maintenable et une autorisation de publication distincte.
 
 ## Références
 
 - [Prérequis Tauri 2 — Arch Linux](https://v2.tauri.app/start/prerequisites/)
+- [Plugin Tauri Dialog](https://v2.tauri.app/plugin/dialog/)
+- [Plugin Tauri File System](https://v2.tauri.app/plugin/file-system/)
 - [Distribution Tauri 2 — AUR](https://v2.tauri.app/distribute/aur/)

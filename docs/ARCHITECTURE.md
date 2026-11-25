@@ -1,41 +1,39 @@
 # Architecture technique
 
-## État de départ
+## État actuel
 
-L’audit de main (25 novembre 2026) trouve une documentation de projet uniquement. Aucun code, manifeste, test, migration ou configuration n’est présent. Cette architecture décrit une cible proposée, pas un système déjà implémenté.
+Le dépôt a commencé comme documentation seule. Le premier lot ajoute un client React/TypeScript/Vite dans `apps/web` et un shell Tauri 2 dans `apps/desktop`. Ce code n’implémente pas encore les comptes, workspaces ou services distants.
 
-## Organisation recommandée
+## Organisation
 
-Un monorepo pnpm est adapté à terme aux clients web, desktop et mobile qui partageront contrats, composants et logique métier. Démarrer par un seul client web et extraire des packages lorsqu’ils ont des consommateurs concrets. Ajouter Turborepo lorsque plusieurs packages ont des tâches répétées à orchestrer ou mettre en cache. Ne pas précréer de packages vides.
+- `apps/web` : application React/Vite partagée par le navigateur et le shell desktop.
+- `apps/desktop` : binaire Rust/Tauri, fenêtre principale et plugins natifs limités au dialogue de sélection et à la lecture des entrées d’un dossier choisi.
+- `apps/mobile` : à créer après prototype Capacitor validé.
+- `packages/contracts` et `packages/ui` : à extraire lorsqu’ils auront réellement plusieurs consommateurs.
+- `supabase/migrations` : après définition du modèle de compte et des workspaces.
 
-Applications prévues :
-- apps/web : composition de l’application React/Vite.
-- apps/desktop : à créer après prototype Tauri validé.
-- apps/mobile : à créer après prototype Capacitor validé.
-- packages/contracts et packages/ui : à extraire lorsqu’ils sont réellement partagés.
-- supabase/migrations : schéma versionné, après définition du modèle.
+pnpm gère le workspace. Turborepo est différé jusqu’à un besoin mesuré d’orchestration multi-package.
 
 ## Couches
 
-Les modules Dashboard, Account, DEV, STUDY, Sync, Storage, Collaboration, Search et Notifications expriment les règles métier. Ils dépendent d’interfaces définies par le produit. Des adaptateurs relient ces interfaces à Supabase/PostgreSQL, IndexedDB, SQLite éventuel, système de fichiers, GitHub et notifications natives.
+Les modules Dashboard, Account, DEV, STUDY, Sync, Storage, Collaboration, Search et Notifications doivent exprimer les règles métier. Ils dépendront d’interfaces stables; aucun adaptateur Supabase ni API distante n’est encore présent.
 
-Les frontières communes à définir quand elles sont utilisées : identité/session, base de données, stockage de fichiers, synchronisation, permissions, notifications, recherche, capacités natives et fournisseur Git. Le client n’est jamais une autorité de permission ; les décisions sont validées côté serveur.
+La première tranche STUDY conserve des devoirs dans IndexedDB, sur l’appareil courant. Cette persistance locale est un prototype hors ligne, pas le stockage central prévu pour les comptes connectés. La tranche DEV utilise Tauri pour obtenir l’autorisation du sélecteur système puis lister les noms des éléments à la racine du dossier choisi. Elle ne lit pas le contenu des fichiers et n’écrit rien.
 
-## Socle cible à valider
+Le client n’est jamais l’autorité de permission pour les données distantes. Chaque accès serveur devra vérifier l’identité, le workspace et le rôle.
 
-- Web : TypeScript, React, Vite, Tailwind CSS ; shadcn/ui si ses composants répondent à un besoin concret.
-- Données distantes : PostgreSQL via Supabase, derrière les interfaces d’accès ; RLS et migrations versionnées.
-- Cache web : IndexedDB. SQLite seulement pour un cas natif établi.
-- Qualité : Vitest pour logique et modules ; Playwright pour les parcours web.
-- Desktop : prototype Tauri 2, en commençant par Arch Linux ; valider accès fichiers, Git, permissions et distribution avant d’étendre la cible.
-- Mobile : prototype Capacitor distinct, avec validation des fichiers, tâches de fond, notifications et builds Android/iOS.
+## Socle technique présent
 
-Aucune compatibilité multiplateforme n’est présumée. Vérifier APIs, plugins, chaîne de compilation, signature et exigences Apple avant engagement. Voir [Linux — Arch](PLATFORM-LINUX-ARCH.md) pour les prérequis et critères de validation.
+- Web : TypeScript, React, Vite et Tailwind CSS 4.
+- Desktop : Tauri 2 et Rust; le binaire release a été compilé sur Arch Linux.
+- Données locales STUDY : IndexedDB; préférences d’affichage : localStorage.
+- Qualité web : Vitest, Testing Library et contrôle TypeScript.
+- Dépendances de workspace : pnpm avec lockfiles pnpm et Cargo.
 
-## Séquence de données
+## Sécurité desktop
 
-UI → service métier (validation et règles) → interface du module → adaptateur local ou distant. Chaque écriture distante revalide identité, appartenance et permission. Sync transmet des changements incrémentaux versionnés ; un conflit reste visible et n’écrase pas une version silencieusement.
+La capability Tauri de la fenêtre principale permet le dialogue d’ouverture et `fs:allow-read-dir`. Le dialogue ajoute un accès temporaire au chemin choisi; il n’est pas conservé après fermeture de l’application. Aucun droit d’écriture au système de fichiers ni accès au shell n’est activé.
 
-## Validations techniques ouvertes
+## Validations encore nécessaires
 
-Prototype Arch avec projets volumineux, chemins, liens symboliques, environnements Wayland/X11 et dépendances d’exécution ; fonctionnement mobile hors ligne ; auth et révocation ; modèle d’invitations et de rôles ; reprise et conflits ; export/restauration ; coûts et limites des fournisseurs avant activation.
+Lancer l’application sur un bureau Arch réel, vérifier le sélecteur et les refus d’accès, générer les paquets Linux sans cache en lecture seule, contrôler leurs dépendances d’exécution et documenter le résultat. Les comportements Wayland/X11, liens symboliques, grands projets et environnements non Arch restent à évaluer.

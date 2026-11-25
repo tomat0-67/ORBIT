@@ -1,6 +1,6 @@
 # Feuille de route
 
-État au 25 novembre 2026 : main contient la documentation de fondation et aucun code produit. Les lots ci-dessous sont des étapes futures et ne décrivent pas des fonctions livrées.
+État au 25 novembre 2026 : les fondations documentaires et un premier shell web/desktop existent. Les fonctions distantes, les comptes et la plupart des modules métier restent à construire.
 
 ## Lot 0 — Audit et fondations documentaires (fait)
 
@@ -9,16 +9,17 @@
 - Consolider le cahier des charges en specs.md.
 - Définir architecture proposée, stockage, sécurité, décisions et progression initiale.
 
-## Lot 1 — Fondations produit, Linux en premier
+## Lot 1 — Fondations produit, Linux en premier (en cours)
 
-- Initialiser la structure et l’outillage TypeScript/React/Vite/Tailwind/pnpm.
-- Choisir un monorepo minimal si les frontières de partage sont justifiées ; différer Turborepo jusqu’au besoin.
-- Mettre en place design system, navigation desktop/mobile et thèmes.
-- Définir les interfaces communes progressivement, sans packages vides.
-- Ajouter des tests ciblés, scripts de vérification, documentation et CI utile.
-- Prototyper le shell desktop Tauri 2 sur Arch Linux en premier ; écrire les commandes reproductibles, identifier les dépendances d’exécution et effectuer un build local avant d’annoncer la compatibilité Linux.
+- Workspace pnpm, client React/TypeScript/Vite/Tailwind et navigation responsive.
+- Design sombre/clair, barre latérale rétractable et parcours de navigation.
+- Wrapper Tauri 2 pour desktop; Arch Linux est la première cible de validation.
+- Premier parcours métier local STUDY : création, complétion, réouverture et suppression des devoirs avec stockage IndexedDB.
+- Premier parcours DEV desktop : sélection explicite d’un dossier et liste en lecture seule de ses entrées de premier niveau.
+- Scripts de tests, contrôle TypeScript, build web et compilation release desktop.
+- À terminer : lancer le binaire sur une session graphique Arch, empaqueter sans erreur, confirmer les dépendances d’exécution et consigner les environnements testés.
 
-**Sortie attendue :** installation reproductible, shell de navigation et build desktop local vérifiés sur Arch, contrôles web disponibles, documentation des versions et limites. Pas de données ou comptes fictifs présentés comme réels.
+**État des contrôles :** 8 tests Vitest passent; typecheck et build web passent; le binaire release a été compilé sur Arch. Le paquetage AppImage/DEB n’a pas abouti dans l’environnement actuel à cause d’une erreur de système de fichiers en lecture seule. Le lancement graphique n’a pas été vérifié.
 
 ## Lot 2 — Compte, workspaces et sécurité
 
@@ -26,11 +27,11 @@ Auth/session, profils, workspaces, membres, invitations, rôles et migrations Po
 
 ## Lot 3 — STUDY
 
-Matières, cours, notes, devoirs et documents structurés. Stockage local des fichiers par défaut. Ajouter ensuite l’import Notion avec prévisualisation, limites, rapport et confirmation avant tout remplacement.
+Matières, cours, notes, documents et import Notion avec prévisualisation. Migrer les données structurées vers PostgreSQL lorsque les comptes et permissions sont en place; conserver les fichiers locaux par défaut.
 
 ## Lot 4 — DEV
 
-D’abord prototype desktop et capacités de fichiers, puis projets locaux, explorateur, éditeur et Git local. Ajouter GitHub via permissions minimales et opérations explicites, sans push automatique.
+Explorateur approfondi et lecture/édition explicite de fichiers, projets locaux, Git local, puis intégration GitHub avec permissions minimales. Aucun push automatique.
 
 ## Lot 5 — Sync et stockage optimisé
 
@@ -38,7 +39,7 @@ Hors ligne, file incrémentale, reprise, idempotence, conflits visibles, limites
 
 ## Lot 6 — Multiplateforme
 
-Étendre web, desktop, Android et iOS selon les prototypes, les APIs natives disponibles, la compilation et les règles de distribution validées. Arch est le premier environnement desktop ; les autres distributions Linux restent à valider séparément.
+Étendre web, desktop, Android et iOS selon les prototypes, les APIs natives disponibles, les compilations et les règles de distribution validées. Les autres distributions Linux restent à valider séparément.
 
 ## Passage entre lots
 

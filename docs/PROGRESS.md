@@ -2,24 +2,34 @@
 
 Mise à jour : 2026-11-25.
 
-## Audit du dépôt
+## Dépôt et branche
 
-- main contient README.md, specs.md et la documentation de fondation issue de la PR #1.
-- Aucun code applicatif, manifeste de paquets, test, migration ou répertoire de documentation n’existait avant la PR #1 ; le dépôt ne contient toujours pas d’application.
-- L’environnement local initial était un dossier de conversation sans checkout Git fonctionnel ; les fichiers qui y ont été créés ne font pas partie de ce dépôt.
-- Le cahier des charges consolidé inclut les politiques de stockage, permissions, lots et comptes rendus.
+- La PR documentaire #2 a été fusionnée dans main.
+- Branche de cette étape : `codex/orbit-linux-app`, créée depuis le main actuel.
+- Le code local a été vérifié avant son transfert dans le dépôt GitHub; ce dossier de travail n’est pas un checkout Git.
 
-## Préparé dans cette branche
+## Réalisé dans cette branche
 
-- Cible desktop de prototypage prioritaire : Arch Linux avec Tauri 2, alignée sur la plateforme demandée.
-- Guide des prérequis Arch et critères attendus pour un prototype et un futur paquet.
-- Architecture, roadmap, journal de décisions et README précisent l’ordre Arch-first et les limites de compatibilité.
-- Branche de travail : codex/orbit-linux-arch (créée depuis main).
+- Workspace pnpm avec application web React/TypeScript/Vite et Tailwind CSS.
+- Dashboard de navigation, vues DEV/STUDY/Compte, mode sombre/clair, navigation mobile et sidebar desktop rétractable.
+- STUDY : création, état terminé/à faire, réouverture et suppression de devoirs enregistrés dans IndexedDB. Entrées limitées et validées côté client.
+- DEV desktop : sélecteur système de dossiers Tauri et affichage en lecture seule des noms à la racine du dossier. Aucun contenu source n’est lu ou envoyé.
+- Tauri 2, plugins Dialog et File System, capability restreinte au dialogue et à `fs:allow-read-dir`.
+- Lockfiles pnpm et Cargo, icônes Linux, scripts web/desktop et documentation mise à jour.
 
-## Pas encore réalisé
+## Vérifications exécutées
 
-Aucune application, authentification, workspace, fonction DEV/STUDY, migration SQL, RLS, synchronisation, compression, stockage cloud ou cible native n’est implémentée. Le build Tauri, le démarrage sur Arch, les tests et la distribution n’ont pas été exécutés. Cette branche prépare la validation ; elle ne constitue pas une preuve de compatibilité.
+- `pnpm typecheck` : réussi.
+- `pnpm test` : réussi, 2 fichiers et 8 tests.
+- `pnpm build` : réussi.
+- `CARGO_HOME=/tmp/orbit-cargo-home pnpm desktop:compile` : réussi sur Arch Linux rolling avec WebKitGTK 4.1; binaire release créé.
+- `pnpm desktop:build` : compilation Rust réussie, étape de paquetage AppImage/DEB échouée avec `Read-only file system (os error 30)` dans l’environnement de travail.
+- Le lancement de la fenêtre et le sélecteur de fichiers n’ont pas été vérifiés graphiquement.
 
-## Suite proposée
+## Fonctionnalités non réalisées
 
-Après revue, créer le shell web et le prototype Tauri minimal, puis obtenir un build et un test de lancement sur Arch avant de documenter Linux comme cible compatible. Les accès aux fichiers utilisateur viennent après validation de chemins, symlinks et permissions.
+Pas d’authentification, compte distant, workspace partagé, rôles/RLS, cours, matières, notes, documents, Git local, éditeur, GitHub, notifications, sync, compression, cloud ni mobile. Le prototype local STUDY n’est pas encore relié à PostgreSQL.
+
+## Suite logique
+
+Corriger le paquetage dans un environnement Arch inscriptible, lancer l’application et vérifier le dialogue d’accès au dossier. Ensuite, étendre DEV sans droits d’écriture implicites, puis définir comptes et workspaces avant d’ajouter sync ou stockage distant.
