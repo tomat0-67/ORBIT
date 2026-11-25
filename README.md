@@ -30,6 +30,15 @@ Prérequis : paquets système Tauri/WebKitGTK 4.1 indiqués dans le [guide Arch]
 
 Si `pnpm` est introuvable, installe-le avec `curl -fsSL https://get.pnpm.io | sh -`, puis ferme et rouvre le terminal. Le [guide Arch](docs/PLATFORM-LINUX-ARCH.md) donne les détails.
 
+Si le dépôt n’est pas encore téléchargé, récupère-le et place-toi dans son dossier :
+
+```sh
+git clone https://github.com/tomat0-67/ORBIT.git
+cd ORBIT
+```
+
+Si tu as déjà cloné le dépôt, ouvre le terminal dans le dossier racine d’ORBIT, celui qui contient `package.json`. Puis lance :
+
 ```sh
 pnpm install
 pnpm desktop:dev
