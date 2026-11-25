@@ -1,23 +1,24 @@
 # Feuille de route
 
-État au 25 novembre 2026 : la branche main ne contient pas de code produit. Les lots ci-dessous sont des étapes futures et ne décrivent pas des fonctions livrées.
+État au 25 novembre 2026 : main contient la documentation de fondation et aucun code produit. Les lots ci-dessous sont des étapes futures et ne décrivent pas des fonctions livrées.
 
-## Lot 0 — Audit et fondations documentaires (fait dans cette PR)
+## Lot 0 — Audit et fondations documentaires (fait)
 
 - Lire le dépôt et son cahier des charges.
 - Comparer la mission ORBIT au document existant.
 - Consolider le cahier des charges en specs.md.
 - Définir architecture proposée, stockage, sécurité, décisions et progression initiale.
 
-## Lot 1 — Fondations produit
+## Lot 1 — Fondations produit, Linux en premier
 
 - Initialiser la structure et l’outillage TypeScript/React/Vite/Tailwind/pnpm.
 - Choisir un monorepo minimal si les frontières de partage sont justifiées ; différer Turborepo jusqu’au besoin.
 - Mettre en place design system, navigation desktop/mobile et thèmes.
 - Définir les interfaces communes progressivement, sans packages vides.
 - Ajouter des tests ciblés, scripts de vérification, documentation et CI utile.
+- Prototyper le shell desktop Tauri 2 sur Arch Linux en premier ; écrire les commandes reproductibles, identifier les dépendances d’exécution et effectuer un build local avant d’annoncer la compatibilité Linux.
 
-**Sortie attendue :** installation reproductible, build, tests et shell de navigation vérifiés. Pas de données ou comptes fictifs présentés comme réels.
+**Sortie attendue :** installation reproductible, shell de navigation et build desktop local vérifiés sur Arch, contrôles web disponibles, documentation des versions et limites. Pas de données ou comptes fictifs présentés comme réels.
 
 ## Lot 2 — Compte, workspaces et sécurité
 
@@ -37,7 +38,7 @@ Hors ligne, file incrémentale, reprise, idempotence, conflits visibles, limites
 
 ## Lot 6 — Multiplateforme
 
-Web, desktop, Android et iOS selon les prototypes, les API natives disponibles, la compilation et les règles de distribution validées.
+Étendre web, desktop, Android et iOS selon les prototypes, les APIs natives disponibles, la compilation et les règles de distribution validées. Arch est le premier environnement desktop ; les autres distributions Linux restent à valider séparément.
 
 ## Passage entre lots
 

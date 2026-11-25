@@ -4,21 +4,22 @@ Mise à jour : 2026-11-25.
 
 ## Audit du dépôt
 
-- main contient README.md (titre seul) et specs.md (cahier des charges initial).
-- Aucun code applicatif, manifeste de paquets, test, migration ou répertoire de documentation n’existait sur main.
+- main contient README.md, specs.md et la documentation de fondation issue de la PR #1.
+- Aucun code applicatif, manifeste de paquets, test, migration ou répertoire de documentation n’existait avant la PR #1 ; le dépôt ne contient toujours pas d’application.
 - L’environnement local initial était un dossier de conversation sans checkout Git fonctionnel ; les fichiers qui y ont été créés ne font pas partie de ce dépôt.
-- Le document initial détaillait plusieurs modules mais ne rendait pas explicites certains invariants de la mission récente : limites de PostgreSQL/Supabase Storage pour DEV, progression stricte des lots, documents maintenus et critères de compte rendu réel.
+- Le cahier des charges consolidé inclut les politiques de stockage, permissions, lots et comptes rendus.
 
-## Réalisé dans cette PR
+## Préparé dans cette branche
 
-- Consolidation du cahier des charges vers la version 1.1.
-- Mise à jour du README et création de l’architecture, roadmap, journal de décisions, progression, stockage et sécurité.
-- Branche de travail : codex/orbit-foundations.
+- Cible desktop de prototypage prioritaire : Arch Linux avec Tauri 2, alignée sur la plateforme demandée.
+- Guide des prérequis Arch et critères attendus pour un prototype et un futur paquet.
+- Architecture, roadmap, journal de décisions et README précisent l’ordre Arch-first et les limites de compatibilité.
+- Branche de travail : codex/orbit-linux-arch (créée depuis main).
 
 ## Pas encore réalisé
 
-Aucune application, authentification, workspace, fonction DEV/STUDY, migration SQL, RLS, synchronisation, compression, stockage cloud ou cible native n’est implémentée. Aucun test ou build applicatif n’a été lancé ; cette PR ne contient que de la documentation.
+Aucune application, authentification, workspace, fonction DEV/STUDY, migration SQL, RLS, synchronisation, compression, stockage cloud ou cible native n’est implémentée. Le build Tauri, le démarrage sur Arch, les tests et la distribution n’ont pas été exécutés. Cette branche prépare la validation ; elle ne constitue pas une preuve de compatibilité.
 
 ## Suite proposée
 
-Après revue de cette PR, démarrer le lot 1 : dépôt/outillage reproductible, application web minimale, navigation, design system et tests exécutés. Le modèle de compte et les migrations restent au lot 2.
+Après revue, créer le shell web et le prototype Tauri minimal, puis obtenir un build et un test de lancement sur Arch avant de documenter Linux comme cible compatible. Les accès aux fichiers utilisateur viennent après validation de chemins, symlinks et permissions.

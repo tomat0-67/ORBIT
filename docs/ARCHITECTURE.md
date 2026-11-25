@@ -2,7 +2,7 @@
 
 ## État de départ
 
-L’audit de main (25 novembre 2026) trouve uniquement un README de titre et specs.md. Aucun code, manifeste, test, migration ou configuration n’est présent. Cette architecture décrit une cible proposée, pas un système déjà implémenté.
+L’audit de main (25 novembre 2026) trouve une documentation de projet uniquement. Aucun code, manifeste, test, migration ou configuration n’est présent. Cette architecture décrit une cible proposée, pas un système déjà implémenté.
 
 ## Organisation recommandée
 
@@ -27,10 +27,10 @@ Les frontières communes à définir quand elles sont utilisées : identité/ses
 - Données distantes : PostgreSQL via Supabase, derrière les interfaces d’accès ; RLS et migrations versionnées.
 - Cache web : IndexedDB. SQLite seulement pour un cas natif établi.
 - Qualité : Vitest pour logique et modules ; Playwright pour les parcours web.
-- Desktop : prototype Tauri 2, avec validation de l’accès fichiers, Git, permissions et distribution.
+- Desktop : prototype Tauri 2, en commençant par Arch Linux ; valider accès fichiers, Git, permissions et distribution avant d’étendre la cible.
 - Mobile : prototype Capacitor distinct, avec validation des fichiers, tâches de fond, notifications et builds Android/iOS.
 
-Aucune compatibilité multiplateforme n’est présumée. Vérifier APIs, plugins, chaîne de compilation, signature et exigences Apple avant engagement.
+Aucune compatibilité multiplateforme n’est présumée. Vérifier APIs, plugins, chaîne de compilation, signature et exigences Apple avant engagement. Voir [Linux — Arch](PLATFORM-LINUX-ARCH.md) pour les prérequis et critères de validation.
 
 ## Séquence de données
 
@@ -38,4 +38,4 @@ UI → service métier (validation et règles) → interface du module → adapt
 
 ## Validations techniques ouvertes
 
-Prototype desktop avec projets volumineux, chemins et symlinks ; fonctionnement mobile hors ligne ; auth et révocation ; modèle d’invitations et de rôles ; reprise et conflits ; export/suppression/restauration ; coûts et limites des fournisseurs avant activation.
+Prototype Arch avec projets volumineux, chemins, liens symboliques, environnements Wayland/X11 et dépendances d’exécution ; fonctionnement mobile hors ligne ; auth et révocation ; modèle d’invitations et de rôles ; reprise et conflits ; export/restauration ; coûts et limites des fournisseurs avant activation.
