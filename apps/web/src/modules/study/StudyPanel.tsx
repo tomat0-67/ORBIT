@@ -50,7 +50,7 @@ export function StudyPanel() {
       return
     }
     setTasks((current) => [task, ...current])
-    setMessage('Devoir ajouté sur cet appareil.')
+    setMessage('Devoir ajouté.')
     form.reset()
   }
 
@@ -65,7 +65,7 @@ export function StudyPanel() {
       return
     }
     setTasks((current) => current.map((task) => task.id === taskId ? updated : task))
-    setMessage('Modifications enregistrées sur cet appareil.')
+    setMessage('Modification enregistrée.')
   }
 
   async function removeTask(taskId: string) {
@@ -76,7 +76,7 @@ export function StudyPanel() {
       return
     }
     setTasks((current) => current.filter((task) => task.id !== taskId))
-    setMessage('Devoir supprimé de cet appareil.')
+    setMessage('Devoir supprimé.')
   }
 
   const openTasks = tasks.filter((task) => !task.completed)
@@ -84,28 +84,26 @@ export function StudyPanel() {
 
   return (
     <section className="study-layout" aria-labelledby="study-list-title">
-      <div className="study-overview">
-        <div>
-          <span className="kicker">Ton organisation</span>
-          <h2 id="study-list-title">Les prochaines étapes.</h2>
-          <p>{openTasks.length} devoir{openTasks.length === 1 ? '' : 's'} à faire · {completedTasks.length} terminé{completedTasks.length === 1 ? '' : 's'}</p>
-        </div>
-        <span className="local-badge"><i /> Stockage local</span>
-      </div>
-
       <form className="task-form" onSubmit={submitTask}>
-        <label className="task-title-field">Nouveau devoir<input name="title" maxLength={120} placeholder="Ex. Réviser le chapitre 4" required /></label>
-        <label>Matière<input name="subject" maxLength={60} placeholder="Ex. Histoire" /></label>
-        <label>À rendre<input name="dueDate" type="date" /></label>
-        <button className="button button-primary" type="submit">Ajouter</button>
+        <h2>Ajouter un devoir</h2>
+        <div className="task-form-fields">
+          <label className="task-title-field">Nom du devoir<input name="title" maxLength={120} placeholder="Ex. Exercices de mathématiques" required /></label>
+          <label>Matière<input name="subject" maxLength={60} placeholder="Ex. Mathématiques" /></label>
+          <label>Échéance<input name="dueDate" type="date" /></label>
+          <button className="button button-primary" type="submit">Ajouter</button>
+        </div>
+        <p className="task-storage-note" role="status" aria-live="polite">{message || 'Enregistré sur cet appareil.'}</p>
       </form>
-      <p className="task-storage-note" role="status" aria-live="polite">{message || 'Ces devoirs restent sur cet appareil. La synchronisation de compte n’est pas encore configurée.'}</p>
 
+      <div className="task-section-heading">
+        <h2 id="study-list-title">À faire</h2>
+        <span>{openTasks.length} devoir{openTasks.length === 1 ? '' : 's'}</span>
+      </div>
       <div className="task-list" aria-label="Devoirs à faire">
-        {loading ? <p className="task-empty">Chargement de tes devoirs…</p> : openTasks.length === 0 ? <p className="task-empty">Aucun devoir à faire. Ajoute une prochaine étape ci-dessus.</p> : openTasks.map((task) => (
+        {loading ? <p className="task-empty">Chargement…</p> : openTasks.length === 0 ? <p className="task-empty">Aucun devoir pour le moment.</p> : openTasks.map((task) => (
           <article className="task-row" key={task.id}>
             <button className="task-check" aria-label={`Marquer « ${task.title} » comme terminé`} onClick={() => updateTask(task.id, (current) => ({ ...current, completed: true }))} />
-            <div className="task-copy"><strong>{task.title}</strong><span>{task.subject}</span></div>
+            <div className="task-copy"><strong>{task.title}</strong><span>{task.subject || 'Sans matière'}</span></div>
             <time className="task-date" dateTime={task.dueDate || undefined}>{formatDueDate(task.dueDate)}</time>
             <button className="task-delete" aria-label={`Supprimer « ${task.title} »`} onClick={() => removeTask(task.id)}>Supprimer</button>
           </article>
@@ -113,10 +111,10 @@ export function StudyPanel() {
       </div>
 
       {completedTasks.length > 0 && <details className="completed-tasks">
-        <summary>Terminés ({completedTasks.length})</summary>
+        <summary>Terminés <span>{completedTasks.length}</span></summary>
         {completedTasks.map((task) => <article className="task-row is-complete" key={task.id}>
           <button className="task-check checked" aria-label={`Rouvrir « ${task.title} »`} onClick={() => updateTask(task.id, (current) => ({ ...current, completed: false }))}>✓</button>
-          <div className="task-copy"><strong>{task.title}</strong><span>{task.subject}</span></div>
+          <div className="task-copy"><strong>{task.title}</strong><span>{task.subject || 'Sans matière'}</span></div>
           <time className="task-date" dateTime={task.dueDate || undefined}>{formatDueDate(task.dueDate)}</time>
           <button className="task-delete" aria-label={`Supprimer « ${task.title} »`} onClick={() => removeTask(task.id)}>Supprimer</button>
         </article>)}
