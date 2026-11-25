@@ -2,7 +2,7 @@
 
 ORBIT réunit un environnement de développement (DEV), une organisation scolaire (STUDY), un tableau de bord, un compte, la synchronisation, le stockage et la collaboration.
 
-**État du dépôt :** cahier des charges et documentation de fondation uniquement. Aucune application fonctionnelle n'est encore présente.
+**État du dépôt :** cahier des charges et documentation de fondation uniquement. Aucune application fonctionnelle n’est encore présente.
 
 ## Documentation
 
@@ -17,7 +17,7 @@ ORBIT réunit un environnement de développement (DEV), une organisation scolair
 
 ## Développement
 
-Le dépôt ne contient pas encore de code ni de configuration de build. Le lot 1 commencera par un shell desktop Tauri 2 validé en premier sur Arch Linux. Les prérequis et critères sont dans le [guide Arch](docs/PLATFORM-LINUX-ARCH.md). Aucune commande de lancement d'ORBIT n'est disponible avant l'ajout du prototype.
+Le dépôt ne contient pas encore de code ni de configuration de build. Le lot 1 commencera par un shell desktop Tauri 2 validé en premier sur Arch Linux. Les prérequis et critères sont dans le [guide Arch](docs/PLATFORM-LINUX-ARCH.md). Aucune commande de lancement d’ORBIT n’est disponible avant l’ajout du prototype.
 
 ## Principes
 
