@@ -1,0 +1,11 @@
+node_modules/
+dist/
+target/
+apps/desktop/src-tauri/gen/schemas/
+.turbo/
+coverage/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
