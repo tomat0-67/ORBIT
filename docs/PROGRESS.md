@@ -5,7 +5,8 @@ Mise à jour : 2026-11-25.
 ## Dépôt et branche
 
 - La PR documentaire #2 et la PR Linux #3 ont été fusionnées dans main.
-- La refonte de l’interface est préparée sur la branche `codex/orbit-interface-refinement`, à destination d’une PR vers main.
+- La refonte de l’interface a été fusionnée dans main via la PR #6.
+- Le lanceur desktop Arch est préparé sur la branche `codex/arch-desktop-launcher`, à destination d’une PR vers main.
 - Le code a été comparé aux fichiers de main avant modification.
 
 ## Refonte de l’interface
