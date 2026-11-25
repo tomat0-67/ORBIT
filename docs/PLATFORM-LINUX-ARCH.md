@@ -20,7 +20,8 @@ sudo pacman -S --needed \
   appmenu-gtk-module \
   libappindicator-gtk3 \
   librsvg \
-  xdotool
+  xdotool \
+  git
 ```
 
 Installer également Rust stable (le plugin File System actuel requiert Rust 1.90 ou plus récent) et Node.js 22.12 ou plus récent.
@@ -33,7 +34,16 @@ curl -fsSL https://get.pnpm.io | sh -
 
 Ferme puis rouvre le terminal après l’installation. Dans le dépôt, `pnpm --version` doit utiliser la version 11.25.0 épinglée dans `package.json`. Le workspace utilise un lockfile pnpm et un Cargo.lock.
 
-## Démarrer
+## Récupérer les sources et démarrer
+
+Si le dépôt n’est pas encore présent sur l’ordinateur :
+
+```sh
+git clone https://github.com/tomat0-67/ORBIT.git
+cd ORBIT
+```
+
+Si tu as déjà cloné le dépôt, ouvre un terminal dans son dossier racine, celui qui contient `package.json`. Depuis cette racine :
 
 ```sh
 pnpm install
