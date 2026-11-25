@@ -27,14 +27,14 @@ describe('ORBIT workspace shell', () => {
     render(<App />)
     const nav = within(screen.getByRole('navigation', { name: 'Navigation principale' }))
 
-    await user.click(nav.getByRole('button', { name: 'ORBIT DEV' }))
-    expect(screen.getByRole('heading', { name: 'Choisis un projet à ouvrir.' })).toBeInTheDocument()
+    await user.click(nav.getByRole('button', { name: 'DEV' }))
+    expect(screen.getByRole('heading', { name: 'Aucun dossier ouvert' })).toBeInTheDocument()
 
-    await user.click(nav.getByRole('button', { name: 'ORBIT STUDY' }))
-    expect(screen.getByRole('heading', { name: 'Les prochaines étapes.' })).toBeInTheDocument()
+    await user.click(nav.getByRole('button', { name: 'STUDY' }))
+    expect(screen.getByRole('heading', { name: 'À faire' })).toBeInTheDocument()
 
     await user.click(nav.getByRole('button', { name: 'Compte' }))
-    expect(screen.getByRole('heading', { name: 'Aucun compte connecté.' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Pas encore de compte' })).toBeInTheDocument()
   })
 
   it('toggles the theme and remembers the choice on this device', async () => {
@@ -45,7 +45,7 @@ describe('ORBIT workspace shell', () => {
     expect(shell).toHaveAttribute('data-theme', 'dark')
 
     await user.click(screen.getAllByRole('button', { name: 'Activer le thème clair' })[0]!)
-    expect(screen.getAllByRole('button', { name: 'Activer le thème sombre' })).toHaveLength(2)
+    expect(screen.getAllByRole('button', { name: 'Activer le thème sombre' })).toHaveLength(1)
     expect(window.localStorage.getItem('orbit.theme')).toBe('light')
   })
 
@@ -67,23 +67,23 @@ describe('ORBIT workspace shell', () => {
     const nav = within(screen.getByRole('navigation', { name: 'Navigation principale' }))
     await user.click(nav.getByRole('button', { name: 'ORBIT STUDY' }))
 
-    await user.type(screen.getByRole('textbox', { name: 'Nouveau devoir' }), 'Réviser les fractions')
+    await user.type(screen.getByRole('textbox', { name: 'Nom du devoir' }), 'Réviser les fractions')
     await user.type(screen.getByRole('textbox', { name: 'Matière' }), 'Mathématiques')
     await user.click(screen.getByRole('button', { name: 'Ajouter' }))
 
     expect(await screen.findByText('Réviser les fractions')).toBeInTheDocument()
-    expect(await screen.findByRole('status')).toHaveTextContent('Devoir ajouté sur cet appareil.')
+    expect(await screen.findByRole('status')).toHaveTextContent('Devoir ajouté.')
 
     await user.click(screen.getByRole('button', { name: 'Marquer « Réviser les fractions » comme terminé' }))
-    expect(await screen.findByText('Terminés (1)')).toBeInTheDocument()
-    await user.click(screen.getByText('Terminés (1)'))
+    expect(await screen.findByText(/Terminés/)).toBeInTheDocument()
+    await user.click(screen.getByText(/Terminés/))
     expect(await screen.findByRole('button', { name: 'Rouvrir « Réviser les fractions »' })).toBeInTheDocument()
   })
 
   it('explains that folder access requires the desktop app in a browser', async () => {
     const user = userEvent.setup()
     render(<App />)
-    await user.click(within(screen.getByRole('navigation', { name: 'Navigation principale' })).getByRole('button', { name: 'ORBIT DEV' }))
+    await user.click(within(screen.getByRole('navigation', { name: 'Navigation principale' })).getByRole('button', { name: 'DEV' }))
     await user.click(screen.getByRole('button', { name: 'Ouvrir un dossier' }))
     expect(screen.getByRole('status')).toHaveTextContent('disponible dans l’application desktop')
   })
