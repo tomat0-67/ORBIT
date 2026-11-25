@@ -9,3 +9,7 @@ coverage/
 .env
 .env.*
 !.env.example
+packaging/arch/pkg/
+packaging/arch/src/
+*.pkg.tar.zst
+*.src.tar.zst
