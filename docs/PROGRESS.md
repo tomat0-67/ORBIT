@@ -30,7 +30,7 @@ Mise à jour : 2026-11-25.
 
 Avant cette refonte, `pnpm typecheck`, `pnpm test` (8 tests), `pnpm build` et la compilation desktop release avaient réussi sur Arch Linux rolling. Le paquetage AppImage/DEB avait échoué pendant l’étape de paquetage avec `Read-only file system (os error 30)`. L’ouverture graphique de la fenêtre n’avait pas été vérifiée dans cet environnement.
 
-Aucun typecheck, test, build ou lancement graphique n’a été relancé après les changements visuels de cette branche.
+Après les changements visuels, `pnpm typecheck` a réussi. Les tests Vitest, le build web et le lancement graphique n’ont pas été relancés.
 
 ## Fonctionnalités non réalisées
 
