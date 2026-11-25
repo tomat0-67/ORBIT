@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=ORBIT
+GenericName=Environnement de travail
+Comment=Projets locaux et devoirs
+Exec=orbit
+Icon=orbit
+Terminal=false
+Categories=Development;Education;
+StartupWMClass=orbit
