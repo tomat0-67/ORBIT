@@ -36,6 +36,13 @@ Après les changements visuels, `pnpm typecheck` a réussi. Les tests Vitest, le
 
 Pas d’authentification, compte distant, workspace partagé, rôles/RLS, cours, matières, notes, documents, Git local, éditeur, GitHub, notifications, synchronisation, compression, stockage cloud ou clients mobiles. Le module STUDY reste local et n’est pas relié à PostgreSQL.
 
+## Lanceur desktop Arch
+
+- Ajout d’un `PKGBUILD` qui compile les sources et installe le binaire ORBIT.
+- Ajout d’une entrée `.desktop` et de l’icône hicolor pour lancer ORBIT depuis le menu du bureau.
+- Ajout d’instructions pour construire et installer le paquet avec `makepkg -si`.
+- Le paquet Arch n’a pas été construit ni installé dans cette étape. Aucun paquet binaire n’a été publié et aucune publication AUR n’a été faite.
+
 ## Suite logique
 
-Vérifier la nouvelle interface sur Arch en mode sombre et clair, puis poursuivre le module DEV avec navigation dans les dossiers, sans droits d’écriture implicites.
+Construire et installer le paquet sur Arch, vérifier qu’ORBIT apparaît dans le menu avec son icône et se lance correctement, puis poursuivre le module DEV sans droits d’écriture implicites.
