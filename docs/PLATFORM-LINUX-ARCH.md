@@ -23,7 +23,15 @@ sudo pacman -S --needed \
   xdotool
 ```
 
-Installer également Rust stable (le plugin File System actuel requiert Rust 1.90 ou plus récent), Node.js 22.12 ou plus récent et pnpm 11.25. Le workspace utilise un lockfile pnpm et un Cargo.lock.
+Installer également Rust stable (le plugin File System actuel requiert Rust 1.90 ou plus récent) et Node.js 22.12 ou plus récent.
+
+Si la commande `pnpm` est introuvable, installe-la avec le script officiel :
+
+```sh
+curl -fsSL https://get.pnpm.io | sh -
+```
+
+Ferme puis rouvre le terminal après l’installation. Dans le dépôt, `pnpm --version` doit utiliser la version 11.25.0 épinglée dans `package.json`. Le workspace utilise un lockfile pnpm et un Cargo.lock.
 
 ## Démarrer
 
@@ -66,6 +74,7 @@ Le format Arch reste à décider après le test de lancement et la génération 
 ## Références
 
 - [Prérequis Tauri 2 — Arch Linux](https://v2.tauri.app/start/prerequisites/)
+- [Installation officielle de pnpm](https://pnpm.io/installation)
 - [Plugin Tauri Dialog](https://v2.tauri.app/plugin/dialog/)
 - [Plugin Tauri File System](https://v2.tauri.app/plugin/file-system/)
 - [Distribution Tauri 2 — AUR](https://v2.tauri.app/distribute/aur/)
