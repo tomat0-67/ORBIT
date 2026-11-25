@@ -28,6 +28,8 @@ Les données STUDY de ce prototype sont locales et ne sont ni synchronisées ni 
 
 Prérequis : paquets système Tauri/WebKitGTK 4.1 indiqués dans le [guide Arch](docs/PLATFORM-LINUX-ARCH.md), Rust 1.90 ou plus récent, Node.js 22.12 ou plus récent et pnpm 11.25.
 
+Si `pnpm` est introuvable, installe-le avec `curl -fsSL https://get.pnpm.io | sh -`, puis ferme et rouvre le terminal. Le [guide Arch](docs/PLATFORM-LINUX-ARCH.md) donne les détails.
+
 ```sh
 pnpm install
 pnpm desktop:dev
