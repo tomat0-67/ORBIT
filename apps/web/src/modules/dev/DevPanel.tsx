@@ -142,7 +142,7 @@ export function DevPanel() {
         </div>
         {preview && <section className="dev-file-preview" aria-label={`Aperçu de ${preview.name}`}>
           <div className="file-list-heading"><span>{preview.name}</span><button className="button button-secondary" onClick={() => setPreview(null)}>Fermer</button></div>
-          <pre>{preview.content || 'Fichier vide.'}</pre>
+          <pre style={{ maxHeight: '60vh', overflow: 'auto', margin: 0, padding: 14, whiteSpace: 'pre', fontFamily: 'ui-monospace, monospace', fontSize: 12, lineHeight: 1.6 }}>{preview.content || 'Fichier vide.'}</pre>
         </section>}
         <p className="task-storage-note">Les fichiers texte sont lus en lecture seule pour l’aperçu, avec une limite de 512 Kio. Aucun fichier n’est modifié.</p>
       </>}
