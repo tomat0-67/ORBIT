@@ -1,0 +1,30 @@
+pkgname=orbit
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Local development and study workspace'
+arch=('x86_64')
+url='https://github.com/tomat0-67/ORBIT'
+license=('unknown')
+depends=('desktop-file-utils' 'gtk3' 'hicolor-icon-theme' 'webkit2gtk-4.1')
+makedepends=('git' 'nodejs' 'pnpm' 'rust')
+source=("orbit::git+https://github.com/tomat0-67/ORBIT.git#branch=main")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/orbit"
+  printf '0.1.0.r%s.%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$srcdir/orbit"
+  pnpm install --frozen-lockfile
+  pnpm desktop:compile
+}
+
+package() {
+  cd "$srcdir/orbit"
+
+  install -Dm755 apps/desktop/src-tauri/target/release/orbit "$pkgdir/usr/bin/orbit"
+  install -Dm644 packaging/arch/orbit.desktop "$pkgdir/usr/share/applications/orbit.desktop"
+  install -Dm644 apps/desktop/src-tauri/icons/128x128.png "$pkgdir/usr/share/icons/hicolor/128x128/apps/orbit.png"
+}

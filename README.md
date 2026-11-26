@@ -24,20 +24,26 @@ Les données STUDY de ce prototype sont locales et ne sont ni synchronisées ni 
 - [Sécurité](docs/SECURITY.md)
 - [Linux — Arch](docs/PLATFORM-LINUX-ARCH.md)
 
-## Installer et lancer sur Arch Linux
+## Installer ORBIT sur Arch Linux
+
+Depuis le dépôt cloné, construis et installe le paquet Arch :
+
+```sh
+cd packaging/arch
+makepkg -si
+```
+
+Après l’installation, ORBIT apparaît dans le menu des applications avec son icône. Tu peux le lancer depuis le menu comme les autres applications, sans taper de commande de lancement.
+
+Le paquet est construit depuis les sources sur l’ordinateur. Aucun paquet binaire préconstruit ni publication AUR n’est fourni pour le moment. Les détails sont dans le [guide Arch](docs/PLATFORM-LINUX-ARCH.md).
+
+## Développement
 
 Prérequis : paquets système Tauri/WebKitGTK 4.1 indiqués dans le [guide Arch](docs/PLATFORM-LINUX-ARCH.md), Rust 1.90 ou plus récent, Node.js 22.12 ou plus récent et pnpm 11.25.
 
-Si `pnpm` est introuvable, installe-le avec `curl -fsSL https://get.pnpm.io | sh -`, puis ferme et rouvre le terminal. Le [guide Arch](docs/PLATFORM-LINUX-ARCH.md) donne les détails.
+Si `pnpm` est introuvable, installe-le avec `curl -fsSL https://get.pnpm.io | sh -`, puis ferme et rouvre le terminal.
 
-Si le dépôt n’est pas encore téléchargé, récupère-le et place-toi dans son dossier :
-
-```sh
-git clone https://github.com/tomat0-67/ORBIT.git
-cd ORBIT
-```
-
-Si tu as déjà cloné le dépôt, ouvre le terminal dans le dossier racine d’ORBIT, celui qui contient `package.json`. Puis lance :
+À la racine du dépôt, lance :
 
 ```sh
 pnpm install
@@ -55,7 +61,7 @@ pnpm build
 pnpm desktop:compile
 ```
 
-`desktop:compile` produit le binaire Rust release sans paquet système. `desktop:build` lance le paquetage AppImage et DEB configuré par Tauri; les paquets de distribution ne sont pas encore validés pour publication.
+`desktop:compile` produit un binaire Rust release sans paquet système. `desktop:build` lance le paquetage AppImage et DEB configuré par Tauri; les paquets de distribution ne sont pas encore validés pour publication.
 
 ## Principes
 
