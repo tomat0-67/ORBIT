@@ -19,7 +19,7 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 - L’application démarre sur l’environnement Arch de référence selon la confirmation de l’utilisateur.
 - STUDY crée, termine, rouvre et supprime des devoirs stockés sur l’appareil avec IndexedDB.
 - DEV ouvre un dossier choisi, navigue dans ses sous-dossiers et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio via un port TypeScript et un adaptateur Tauri.
-- Le shell Tauri ne donne que les permissions nécessaires au dialogue et à la lecture de liste de dossiers.
+- La capacité Tauri permet le dialogue natif, la lecture des listes, l’ouverture en lecture et la lecture de handles; aucun accès en écriture n’est accordé.
 - Un `PKGBUILD` et une entrée `.desktop` existent pour installer un binaire, une icône et un raccourci de menu; le paquet n’a pas encore été construit/validé.
 
 ### Manquant pour une cible Linux aboutie
