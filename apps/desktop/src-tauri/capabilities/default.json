@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main-capability",
-  "description": "Basic desktop access plus read-only access to a folder selected by the user.",
+  "description": "Basic desktop access plus read-only directory listing below the folder selected by the user.",
   "windows": ["main"],
   "permissions": [
     "core:default",
