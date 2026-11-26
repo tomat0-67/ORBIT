@@ -42,7 +42,9 @@ export const tauriFileSystem: FileSystemPort = {
       }
 
       try {
-        return new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(0, offset))
+        const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(0, offset))
+        if (text.includes('\0')) throw new Error('NOT_TEXT')
+        return text
       } catch {
         throw new Error('NOT_TEXT')
       }
