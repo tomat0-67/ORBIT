@@ -17,7 +17,7 @@ La cible première est ORBIT Desktop Linux, avec Arch Linux comme environnement 
 - Le paquet Arch `PKGBUILD`/fichier `.desktop` est présent, mais n’a pas encore été construit ni installé. Le PKGBUILD source une branche mutable et saute les sommes de source Git; cela n’est pas une compilation reproductible.
 - L’utilisateur confirme que l’application démarre sur Arch et que la gestion des devoirs fonctionne. Le lancement depuis un paquet Arch installé n’a pas encore été validé.
 
-Le port et l’adaptateur rendent la frontière fichiers explicite, mais il n’existe pas encore d’adaptateur navigateur ni d’interface Git. Cette tranche autorise la navigation de dossiers choisis; elle ne lit pas les fichiers.
+Le port et l’adaptateur rendent la frontière fichiers explicite, mais il n’existe pas encore d’adaptateur navigateur ni d’interface Git. Cette tranche autorise la navigation du dossier choisi et la lecture bornée pour aperçu; elle ne modifie pas les fichiers.n’existe pas encore d’adaptateur navigateur ni d’interface Git. Cette tranche autorise la navigation de dossiers choisis; elle ne lit pas les fichiers.
 
 ## Frontières à conserver
 
@@ -36,7 +36,7 @@ Flux cible : `UI → cas d’usage → port → adaptateur plateforme`. Les dép
 
 ### Système de fichiers
 
-Garder l’accès natif derrière le port; l’adaptateur actuel appelle le plugin File System Tauri. Le port expose uniquement les opérations nécessaires aux cas d’usage. Ajouter une commande Rust personnalisée seulement si un besoin de limites de lecture ou de validation ne peut pas être garanti par le plugin. L’accès commence depuis un dossier explicitement choisi; vérifier les chemins canoniques, traversal et liens symboliques au moment de chaque opération. Les écritures doivent être explicites, atomiques autant que possible, et testées contre les échecs disque/permission. Ne pas accorder `fs:allow-write` global à l’interface.
+Garder l’accès natif derrière le port; l’adaptateur actuel appelle le plugin File System Tauri. Le port expose uniquement les opérations nécessaires aux cas d’usage. L’aperçu ouvre un handle en lecture seule, vérifie la taille avant allocation et refuse les fichiers de plus de 512 Kio ou le texte UTF-8 invalide. L’accès commence depuis un dossier explicitement choisi; vérifier les chemins canoniques, traversal et liens symboliques au moment de chaque opération. Les écritures doivent être explicites, atomiques autant que possible, et testées contre les échecs disque/permission. Ne pas accorder `fs:allow-write` global à l’interface.n File System Tauri. Le port expose uniquement les opérations nécessaires aux cas d’usage. Ajouter une commande Rust personnalisée seulement si un besoin de limites de lecture ou de validation ne peut pas être garanti par le plugin. L’accès commence depuis un dossier explicitement choisi; vérifier les chemins canoniques, traversal et liens symboliques au moment de chaque opération. Les écritures doivent être explicites, atomiques autant que possible, et testées contre les échecs disque/permission. Ne pas accorder `fs:allow-write` global à l’interface.
 
 L’adaptateur Web n’imite pas ces droits : il utilise uniquement les API navigateur avec autorisation utilisateur et informe des différences.
 
@@ -67,7 +67,7 @@ Un build réussi sur une seule machine ne suffit pas à établir la reproductibi
 
 ## Suite technique
 
-1. Ajouter lecture de texte bornée et testée derrière `FileSystemPort`, sans permission d’écriture.
+1. Ajouter des tests pour la lecture de texte bornée derrière `FileSystemPort`, sans permission d’écriture.
 2. Choisir et intégrer Git local via un port commun.
 3. Construire/installer le paquet Arch et valider le lancement depuis menu dans un environnement propre.
 4. Ajouter GitHub après l’authentification et la gestion sûre des jetons.
