@@ -1,6 +1,6 @@
 import { isTauri } from '@tauri-apps/api/core'
 import { open } from '@tauri-apps/plugin-dialog'
-import { readDir } from '@tauri-apps/plugin-fs'
+import { open as openFile, readDir } from '@tauri-apps/plugin-fs'
 import type { FileSystemPort } from './fileSystemPort'
 
 export const tauriFileSystem: FileSystemPort = {
@@ -25,5 +25,29 @@ export const tauriFileSystem: FileSystemPort = {
         kind: entry.isDirectory ? 'directory' as const : 'file' as const,
       }))
       .sort((a, b) => Number(b.kind === 'directory') - Number(a.kind === 'directory') || a.name.localeCompare(b.name))
+  },
+
+  async readTextFile(path, maxBytes) {
+    const file = await openFile(path, { read: true })
+    try {
+      const { size } = await file.stat()
+      if (size > maxBytes) throw new Error('FILE_TOO_LARGE')
+
+      const bytes = new Uint8Array(size)
+      let offset = 0
+      while (offset < bytes.length) {
+        const count = await file.read(bytes.subarray(offset))
+        if (count === null || count === 0) break
+        offset += count
+      }
+
+      try {
+        return new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(0, offset))
+      } catch {
+        throw new Error('NOT_TEXT')
+      }
+    } finally {
+      await file.close()
+    }
   },
 }
