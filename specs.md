@@ -23,7 +23,7 @@ La recherche et les notifications ne doivent révéler aucune donnée inaccessib
 
 ## 3. Plateformes et présentation
 
-Plateformes visées : navigateur web, Windows, macOS, Linux (dont Arch Linux), Android et iOS. L’interface s’adapte aux dimensions et aux méthodes de saisie. Desktop : sidebar rétractable, clavier et grand écran. Mobile : navigation tactile, contrôles adaptés et fonctions limitées aux capacités réelles de l’appareil.
+Plateformes visées et ordre de livraison : ORBIT Desktop Linux (Arch Linux comme environnement de référence), ORBIT Web, Windows et macOS, puis Android et iOS. Les APIs et capacités natives sont validées séparément pour chaque cible; le partage de composants ne doit pas masquer les différences de plateforme. L’interface s’adapte aux dimensions et aux méthodes de saisie. Desktop : sidebar rétractable, clavier et grand écran. Mobile : navigation tactile, contrôles adaptés et fonctions limitées aux capacités réelles de l’appareil.
 
 Direction visuelle : moderne, minimaliste, sombre par défaut, mode clair, navigation intuitive, animations discrètes et design system partagé. DEV et STUDY ont des fonctions distinctes, mais une présentation cohérente. Une maquette ou un état vide ne constitue pas une fonction métier.
 
