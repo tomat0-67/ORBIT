@@ -3,6 +3,7 @@ import type { ProjectEntry } from './fileSystemPort'
 import { tauriFileSystem } from './tauriFileSystem'
 
 type Folder = { name: string; path: string }
+const MAX_PREVIEW_BYTES = 512 * 1024
 
 function folderLabel(path: string) {
   return path.split(/[\\/]/).filter(Boolean).at(-1) ?? path
@@ -22,6 +23,7 @@ export function DevPanel() {
   const [entries, setEntries] = useState<ProjectEntry[]>([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [preview, setPreview] = useState<{ name: string; content: string } | null>(null)
   const currentFolder = folders.at(-1) ?? null
 
   async function chooseProject() {
@@ -38,6 +40,7 @@ export function DevPanel() {
       const items = await tauriFileSystem.readDirectory(selected)
       setFolders([{ name: folderLabel(selected), path: selected }])
       setEntries(items)
+      setPreview(null)
     } catch {
       setError('Impossible d’ouvrir ce dossier. Vérifie les droits de ton compte et réessaie.')
     } finally {
@@ -54,6 +57,7 @@ export function DevPanel() {
       const items = await tauriFileSystem.readDirectory(path)
       setFolders((current) => [...current, { name: entry.name, path }])
       setEntries(items)
+      setPreview(null)
     } catch {
       setError(`Impossible d’ouvrir le dossier « ${entry.name} ».`)
     } finally {
@@ -70,8 +74,30 @@ export function DevPanel() {
       const items = await tauriFileSystem.readDirectory(nextFolders[index]!.path)
       setFolders(nextFolders)
       setEntries(items)
+      setPreview(null)
     } catch {
       setError('Impossible de relire ce dossier. Il a peut-être été déplacé ou supprimé.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function openFile(entry: ProjectEntry) {
+    if (!currentFolder || entry.kind !== 'file' || busy) return
+    setBusy(true)
+    setError('')
+    try {
+      const content = await tauriFileSystem.readTextFile(joinPath(currentFolder.path, entry.name), MAX_PREVIEW_BYTES)
+      setPreview({ name: entry.name, content })
+    } catch (cause) {
+      setPreview(null)
+      if (cause instanceof Error && cause.message === 'FILE_TOO_LARGE') {
+        setError('Ce fichier dépasse la limite d’aperçu de 512 Kio.')
+      } else if (cause instanceof Error && cause.message === 'NOT_TEXT') {
+        setError('Ce fichier ne contient pas du texte UTF‑8 valide.')
+      } else {
+        setError(`Impossible de lire le fichier « ${entry.name} ».`)
+      }
     } finally {
       setBusy(false)
     }
@@ -107,14 +133,18 @@ export function DevPanel() {
               <small>Dossier&nbsp; ›</small>
             </button>
           ) : (
-            <div className="file-row" key={entry.name}>
+            <button className="file-row folder-button" key={entry.name} onClick={() => openFile(entry)} disabled={busy} aria-label={`Afficher le fichier ${entry.name}`}>
               <span className="file-type" aria-hidden="true">F</span>
               <span>{entry.name}</span>
-              <small>Fichier</small>
-            </div>
+              <small>Aperçu</small>
+            </button>
           ))}
         </div>
-        <p className="task-storage-note">La navigation reste dans le dossier choisi. ORBIT affiche les noms, sans lire ni modifier le contenu des fichiers.</p>
+        {preview && <section className="dev-file-preview" aria-label={`Aperçu de ${preview.name}`}>
+          <div className="file-list-heading"><span>{preview.name}</span><button className="button button-secondary" onClick={() => setPreview(null)}>Fermer</button></div>
+          <pre>{preview.content || 'Fichier vide.'}</pre>
+        </section>}
+        <p className="task-storage-note">Les fichiers texte sont lus en lecture seule pour l’aperçu, avec une limite de 512 Kio. Aucun fichier n’est modifié.</p>
       </>}
     </section>
   )
