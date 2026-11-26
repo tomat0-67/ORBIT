@@ -41,17 +41,17 @@ Pas d’authentification, compte distant, workspace partagé, rôles/RLS, cours,
 
 - Nouvelle priorité confirmée : Linux desktop (Arch référence), Web, Windows/macOS, Android/iOS.
 - L’utilisateur confirme que l’application se lance sur son Arch et que le parcours des devoirs fonctionne. Ce retour ne valide pas encore l’installation du paquet Arch.
-- DEV navigue dans les sous-dossiers du répertoire choisi et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio. L’édition, Git local et GitHub restent absents.ns les sous-dossiers du répertoire choisi, avec fil d’Ariane. Lecture de contenu, édition, Git local et GitHub restent absents.
+- DEV navigue dans les sous-dossiers du répertoire choisi et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio. L’édition, Git local et GitHub restent absents.
 - La PR #7 ajoute un `PKGBUILD`, une entrée `.desktop` et une icône hicolor. Le paquet n’a pas été construit ni installé; il n’existe pas de paquet binaire publié ni de publication AUR.
 - La compilation reproductible reste à réaliser : la source PKGBUILD pointe vers `main` et somme les sources Git avec `SKIP`.
 
-## Tranche DEV — navigation des dossiers
+## Tranche DEV — navigation et aperçu texte
 
-- Ajout du contrat TypeScript `FileSystemPort` et de son adaptateur Tauri pour le sélecteur et la lecture de répertoire.
-- Le sélecteur demande un scope récursif uniquement pour le dossier que l’utilisateur choisit; les permissions restent limitées à la lecture des listes de dossiers.
-- Ajout de navigation dans les sous-dossiers et retour par fil d’Ariane. Lecture de fichiers et écriture restent désactivées.
+- Ajout du contrat TypeScript `FileSystemPort` et de son adaptateur Tauri pour le sélecteur, la lecture de répertoire et l’aperçu texte.
+- Le sélecteur limite l’accès au dossier choisi par l’utilisateur; l’aperçu utilise un handle en lecture seule, vérifie la taille avant allocation, refuse au-delà de 512 Kio et rejette le texte UTF-8 invalide.
+- Navigation par sous-dossiers et fil d’Ariane; aucun fichier n’est modifié.
 - `tsc -b --pretty false` exécuté depuis `apps/web` : réussi. Tests Vitest et lancement desktop non exécutés après cette modification.
 
 ## Suite logique
 
-Ajouter une lecture de texte bornée et explicite avec test des limites et des erreurs, puis intégrer Git local. La validation réelle reste à faire dans le paquet Arch.
+Ajouter des tests des limites et erreurs de l’aperçu, puis intégrer Git local. La validation du dialogue et de l’aperçu dans le desktop Arch reste à faire.
