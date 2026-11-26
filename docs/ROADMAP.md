@@ -18,7 +18,7 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 - React/TypeScript/Vite et Tailwind dans `apps/web`; Tauri 2/Rust dans `apps/desktop`.
 - L’application démarre sur l’environnement Arch de référence selon la confirmation de l’utilisateur.
 - STUDY crée, termine, rouvre et supprime des devoirs stockés sur l’appareil avec IndexedDB.
-- DEV ouvre un dossier choisi, navigue dans ses sous-dossiers et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio via un port TypeScript et un adaptateur Tauri.navigue dans ses sous-dossiers et affiche leurs noms via un port TypeScript et un adaptateur Tauri.
+- DEV ouvre un dossier choisi, navigue dans ses sous-dossiers et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio via un port TypeScript et un adaptateur Tauri.
 - Le shell Tauri ne donne que les permissions nécessaires au dialogue et à la lecture de liste de dossiers.
 - Un `PKGBUILD` et une entrée `.desktop` existent pour installer un binaire, une icône et un raccourci de menu; le paquet n’a pas encore été construit/validé.
 
