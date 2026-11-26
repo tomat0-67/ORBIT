@@ -24,7 +24,7 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 
 ### Manquant pour une cible Linux aboutie
 
-- DEV propose la lecture bornée des fichiers texte, sans édition. L’interface est séparée du plugin Tauri par un port; l’adaptateur navigateur reste à créer.n’a pas d’édition. L’interface de navigation est séparée du plugin Tauri par un port; l’adaptateur navigateur reste à créer.
+- DEV propose la lecture bornée des fichiers texte, sans édition. L’interface est séparée du plugin Tauri par un port; l’adaptateur navigateur reste à créer.
 - Git local, gestion de dépôt et interface Git sont absents.
 - GitHub n’est pas intégré.
 - Le `PKGBUILD` suit actuellement la branche mutable `main` et saute la vérification de somme pour la source Git. Les versions Node/pnpm/Rust ne sont pas toutes verrouillées ensemble.
@@ -35,10 +35,10 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 
 ### 1.1 Socle desktop natif
 - Tauri 2 reste le shell Linux. Le port `FileSystemPort` et l’adaptateur Tauri sont en place pour le choix et la navigation de dossiers.
-- Lecture de texte bornée en lecture seule : implémentée dans l’adaptateur Tauri avec limite 512 Kio et validation UTF-8; le parcours reste à valider dans l’application desktop.n lecture seule. Définir les limites de taille et d’encodage avant de lire le contenu.
+- Lecture de texte bornée en lecture seule : implémentée dans l’adaptateur Tauri avec limite 512 Kio et validation UTF-8 sans octet nul; le parcours reste à valider dans l’application desktop.
 - Créer un adaptateur navigateur indépendant seulement lorsque les capacités Web de fichiers sont évaluées.
 - Définir les limites d’accès à partir d’un dossier choisi. Prévenir traversal, liens symboliques inattendus, lectures excessives et écritures involontaires.
-- Navigation réelle des sous-dossiers et aperçu borné des fichiers texte : implémentés, mais pas encore validés sur l’application desktop.ncore validée sur l’application desktop.
+- Navigation réelle des sous-dossiers et aperçu borné des fichiers texte : implémentés, mais pas encore validés sur l’application desktop.
 - Ne pas activer l’écriture avant sauvegarde/confirmation et tests de non-perte.
 
 ### 1.2 Git local
