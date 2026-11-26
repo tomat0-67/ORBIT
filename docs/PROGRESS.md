@@ -24,8 +24,8 @@ Mise à jour : 2026-11-26.
 - Workspace pnpm avec application web React/TypeScript/Vite et Tailwind CSS.
 - Navigation interactive entre Accueil, DEV, STUDY et Compte ; sidebar desktop rétractable ; thèmes clair/sombre mémorisés localement.
 - STUDY : devoirs créés, terminés, rouverts et supprimés dans IndexedDB.
-- DEV desktop : sélection d’un dossier puis navigation de ses sous-dossiers. Le port `FileSystemPort` isole l’interface de l’adaptateur Tauri. Seuls les noms sont affichés; les contenus ne sont pas lus et aucun fichier n’est modifié.
-- Tauri 2, plugins Dialog et File System, permissions limitées au dialogue et à `fs:allow-read-dir`.
+- DEV desktop : choix d’un dossier, navigation des sous-dossiers et aperçu texte UTF-8 borné à 512 Kio. Aucun fichier n’est modifié.
+- Tauri 2, plugins Dialog et File System; permissions limitées au dossier choisi, à la lecture de liste et à la lecture de fichiers bornée.
 
 ## Vérifications précédentes
 
