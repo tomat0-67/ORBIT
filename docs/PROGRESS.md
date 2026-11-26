@@ -6,7 +6,7 @@ Mise à jour : 2026-11-25.
 
 - La PR documentaire #2 et la PR Linux #3 ont été fusionnées dans main.
 - La refonte de l’interface a été fusionnée dans main via la PR #6.
-- Le lanceur desktop Arch est préparé sur la branche `codex/arch-desktop-launcher`, à destination d’une PR vers main.
+- Le lanceur desktop Arch a été ajouté via la PR #7. Le `PKGBUILD` n’a pas encore été construit ni installé.
 - Le code a été comparé aux fichiers de main avant modification.
 
 ## Refonte de l’interface
@@ -37,13 +37,14 @@ Après les changements visuels, `pnpm typecheck` a réussi. Les tests Vitest, le
 
 Pas d’authentification, compte distant, workspace partagé, rôles/RLS, cours, matières, notes, documents, Git local, éditeur, GitHub, notifications, synchronisation, compression, stockage cloud ou clients mobiles. Le module STUDY reste local et n’est pas relié à PostgreSQL.
 
-## Lanceur desktop Arch
+## Priorité Linux desktop
 
-- Ajout d’un `PKGBUILD` qui compile les sources et installe le binaire ORBIT.
-- Ajout d’une entrée `.desktop` et de l’icône hicolor pour lancer ORBIT depuis le menu du bureau.
-- Ajout d’instructions pour construire et installer le paquet avec `makepkg -si`.
-- Le paquet Arch n’a pas été construit ni installé dans cette étape. Aucun paquet binaire n’a été publié et aucune publication AUR n’a été faite.
+- Nouvelle priorité confirmée : Linux desktop (Arch référence), Web, Windows/macOS, Android/iOS.
+- L’utilisateur confirme que l’application se lance sur son Arch et que le parcours des devoirs fonctionne. Ce retour ne valide pas encore l’installation du paquet Arch.
+- Le code DEV actuel ne navigue pas dans l’arborescence et ne lit que les noms à la racine d’un dossier choisi. Git local et GitHub restent absents.
+- La PR #7 ajoute un `PKGBUILD`, une entrée `.desktop` et une icône hicolor. Le paquet n’a pas été construit ni installé; il n’existe pas de paquet binaire publié ni de publication AUR.
+- La compilation reproductible reste à réaliser : la source PKGBUILD pointe vers `main` et somme les sources Git avec `SKIP`.
 
 ## Suite logique
 
-Construire et installer le paquet sur Arch, vérifier qu’ORBIT apparaît dans le menu avec son icône et se lance correctement, puis poursuivre le module DEV sans droits d’écriture implicites.
+Terminer les capacités natives Linux : accès fichiers derrière une interface, Git local, GitHub, puis construire et valider le paquet dans un environnement Arch propre. Web vient ensuite.
