@@ -1,11 +1,13 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main-capability",
-  "description": "Basic desktop access plus read-only directory listing below the folder selected by the user.",
+  "description": "Basic desktop access plus read-only directory listing and bounded text preview below the folder selected by the user.",
   "windows": ["main"],
   "permissions": [
     "core:default",
     "dialog:allow-open",
-    "fs:allow-read-dir"
+    "fs:allow-read-dir",
+    "fs:allow-open",
+    "fs:allow-read"
   ]
 }
