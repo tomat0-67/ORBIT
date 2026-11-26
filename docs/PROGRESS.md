@@ -1,6 +1,6 @@
 # Progression réelle
 
-Mise à jour : 2026-11-25.
+Mise à jour : 2026-11-26.
 
 ## Dépôt et branche
 
@@ -24,7 +24,7 @@ Mise à jour : 2026-11-25.
 - Workspace pnpm avec application web React/TypeScript/Vite et Tailwind CSS.
 - Navigation interactive entre Accueil, DEV, STUDY et Compte ; sidebar desktop rétractable ; thèmes clair/sombre mémorisés localement.
 - STUDY : devoirs créés, terminés, rouverts et supprimés dans IndexedDB.
-- DEV desktop : choix d’un dossier via le sélecteur système Tauri et lecture des noms à sa racine. Aucun contenu source n’est lu ou envoyé.
+- DEV desktop : sélection d’un dossier puis navigation de ses sous-dossiers. Le port `FileSystemPort` isole l’interface de l’adaptateur Tauri. Seuls les noms sont affichés; les contenus ne sont pas lus et aucun fichier n’est modifié.
 - Tauri 2, plugins Dialog et File System, permissions limitées au dialogue et à `fs:allow-read-dir`.
 
 ## Vérifications précédentes
@@ -41,10 +41,17 @@ Pas d’authentification, compte distant, workspace partagé, rôles/RLS, cours,
 
 - Nouvelle priorité confirmée : Linux desktop (Arch référence), Web, Windows/macOS, Android/iOS.
 - L’utilisateur confirme que l’application se lance sur son Arch et que le parcours des devoirs fonctionne. Ce retour ne valide pas encore l’installation du paquet Arch.
-- Le code DEV actuel ne navigue pas dans l’arborescence et ne lit que les noms à la racine d’un dossier choisi. Git local et GitHub restent absents.
+- DEV navigue maintenant dans les sous-dossiers du répertoire choisi, avec fil d’Ariane. Lecture de contenu, édition, Git local et GitHub restent absents.
 - La PR #7 ajoute un `PKGBUILD`, une entrée `.desktop` et une icône hicolor. Le paquet n’a pas été construit ni installé; il n’existe pas de paquet binaire publié ni de publication AUR.
 - La compilation reproductible reste à réaliser : la source PKGBUILD pointe vers `main` et somme les sources Git avec `SKIP`.
 
+## Tranche DEV — navigation des dossiers
+
+- Ajout du contrat TypeScript `FileSystemPort` et de son adaptateur Tauri pour le sélecteur et la lecture de répertoire.
+- Le sélecteur demande un scope récursif uniquement pour le dossier que l’utilisateur choisit; les permissions restent limitées à la lecture des listes de dossiers.
+- Ajout de navigation dans les sous-dossiers et retour par fil d’Ariane. Lecture de fichiers et écriture restent désactivées.
+- `tsc -b --pretty false` exécuté depuis `apps/web` : réussi. Tests Vitest et lancement desktop non exécutés après cette modification.
+
 ## Suite logique
 
-Terminer les capacités natives Linux : accès fichiers derrière une interface, Git local, GitHub, puis construire et valider le paquet dans un environnement Arch propre. Web vient ensuite.
+Ajouter une lecture de texte bornée et explicite avec test des limites et des erreurs, puis intégrer Git local. La validation réelle reste à faire dans le paquet Arch.
