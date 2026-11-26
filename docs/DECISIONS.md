@@ -41,3 +41,13 @@ Arch est le premier système de validation demandé. Le binaire Tauri release co
 
 **Statut :** stockage local temporaire.  
 Les devoirs de démonstration STUDY sont enregistrés dans IndexedDB de l’appareil courant; ils ne sont ni envoyés, ni synchronisés, ni chiffrés par ORBIT. Cette implémentation locale ne remplace pas le futur PostgreSQL protégé par RLS. Le thème reste une préférence localStorage.
+
+## ADR-009 — Ordre de livraison Linux d’abord
+
+**Statut :** adopté à la demande du propriétaire du projet.  
+Ordre cible : ORBIT Desktop Linux, Arch Linux comme référence; ORBIT Web; Windows/macOS; Android/iOS. Tauri 2 reste la base desktop à valider par des fonctions natives réelles. Les interfaces métier peuvent être partagées; les adaptateurs fichiers, Git, installation, permissions et compilation sont propres à chaque cible. Une fenêtre Tauri seule ne constitue pas l’achèvement de la cible Linux.
+
+## ADR-010 — Compilation Arch reproductible avant distribution
+
+**Statut :** exigence de livraison; non satisfaite actuellement.  
+Le `PKGBUILD` présent suit `main` et utilise `sha256sums=('SKIP')`; le paquet n’a pas été construit/validé. Avant une release, pinner source et outillage, construire dans un chroot propre Arch, contrôler les dépendances et comparer des reconstructions du même commit. La PR #7 ajoute une entrée de menu et une icône, mais ne fournit pas encore de paquet préconstruit.
