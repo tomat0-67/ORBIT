@@ -36,7 +36,7 @@ Flux cible : `UI → cas d’usage → port → adaptateur plateforme`. Les dép
 
 ### Système de fichiers
 
-Garder l’accès natif derrière le port; l’adaptateur actuel appelle le plugin File System Tauri. Le port expose uniquement les opérations nécessaires aux cas d’usage. L’aperçu ouvre un handle en lecture seule, vérifie la taille avant allocation et refuse les fichiers de plus de 512 Kio ou le texte UTF-8 invalide. L’accès commence depuis un dossier explicitement choisi; vérifier les chemins canoniques, traversal et liens symboliques au moment de chaque opération. Les écritures doivent être explicites, atomiques autant que possible, et testées contre les échecs disque/permission. Ne pas accorder `fs:allow-write` global à l’interface.
+Garder l’accès natif derrière le port; l’adaptateur actuel appelle le plugin File System Tauri. Le port expose uniquement les opérations nécessaires aux cas d’usage. L’aperçu ouvre un handle en lecture seule, vérifie la taille avant allocation et refuse les fichiers de plus de 512 Kio, le texte UTF-8 invalide ou les octets nuls. L’accès commence depuis un dossier explicitement choisi; vérifier les chemins canoniques, traversal et liens symboliques au moment de chaque opération. Les écritures doivent être explicites, atomiques autant que possible, et testées contre les échecs disque/permission. Ne pas accorder `fs:allow-write` global à l’interface.
 
 L’adaptateur Web n’imite pas ces droits : il utilise uniquement les API navigateur avec autorisation utilisateur et informe des différences.
 
