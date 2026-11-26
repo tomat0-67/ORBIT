@@ -19,7 +19,7 @@ Ces exigences précèdent les premières migrations. Ce document définit les co
 
 ## Client desktop Linux du prototype
 
-- La fenêtre Tauri reçoit `core:default`, `dialog:allow-open`, `fs:allow-read-dir`, `fs:allow-open` et `fs:allow-read`; aucune permission d’écriture n’est accordée.
+- La fenêtre Tauri reçoit `core:default`, `dialog:allow-open`, `fs:allow-read-dir`, `fs:allow-open`, `fs:allow-read` et `fs:allow-fstat`; aucune permission d’écriture n’est accordée.
 - Le dialogue natif choisit explicitement un dossier et ajoute son chemin au scope temporaire. L’option récursive permet seulement de lister les sous-dossiers sous cette racine choisie.
 - Aucune permission d’écriture de fichiers, d’exécution shell ou d’accès réseau n’est accordée par cette capacité.
 - Le frontend peut lister les entrées des sous-dossiers de la racine choisie et lire en mémoire un fichier sélectionné pour l’aperçu. La taille est vérifiée avant allocation, limitée à 512 Kio, et les octets doivent former du texte UTF-8 valide.
