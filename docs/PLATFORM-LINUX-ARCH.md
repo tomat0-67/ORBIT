@@ -50,7 +50,7 @@ Cette procédure compile les sources sur l’ordinateur. Aucun paquet préconstr
 
 ## Lancer en mode développement
 
-À la racine du dépôt, et non dans `/home/eliott` ou un autre dossier personnel :
+À la racine du dépôt, et non dans `/home/` ou un autre dossier personnel :
 
 ```sh
 pnpm install
