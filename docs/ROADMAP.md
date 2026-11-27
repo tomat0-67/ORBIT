@@ -18,13 +18,13 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 - React/TypeScript/Vite et Tailwind dans `apps/web`; Tauri 2/Rust dans `apps/desktop`.
 - L’application démarre sur l’environnement Arch de référence selon la confirmation de l’utilisateur.
 - STUDY crée, termine, rouvre et supprime des devoirs stockés sur l’appareil avec IndexedDB.
-- DEV ouvre un dossier choisi et affiche les noms des entrées directement à sa racine.
-- Le shell Tauri ne donne que les permissions nécessaires au dialogue et à la lecture de liste de dossiers.
+- DEV ouvre un dossier choisi, navigue dans ses sous-dossiers et prévisualise les fichiers texte UTF-8 jusqu’à 512 Kio via un port TypeScript et un adaptateur Tauri.
+- La capacité Tauri permet le dialogue natif, la lecture des listes, l’ouverture en lecture et la lecture de handles; aucun accès en écriture n’est accordé.
 - Un `PKGBUILD` et une entrée `.desktop` existent pour installer un binaire, une icône et un raccourci de menu; le paquet n’a pas encore été construit/validé.
 
 ### Manquant pour une cible Linux aboutie
 
-- DEV n’a pas d’explorateur navigable, de lecture/édition de fichier ni d’abstraction de système de fichiers. Le composant web importe directement les plugins Tauri.
+- DEV propose la lecture bornée des fichiers texte, sans édition. L’interface est séparée du plugin Tauri par un port; l’adaptateur navigateur reste à créer.
 - Git local, gestion de dépôt et interface Git sont absents.
 - GitHub n’est pas intégré.
 - Le `PKGBUILD` suit actuellement la branche mutable `main` et saute la vérification de somme pour la source Git. Les versions Node/pnpm/Rust ne sont pas toutes verrouillées ensemble.
@@ -34,10 +34,12 @@ Une fonctionnalité native ne sera annoncée comme partagée que si son API et s
 ## Étape 1 — ORBIT Desktop Linux (prioritaire)
 
 ### 1.1 Socle desktop natif
-- Garder Tauri 2 et remplacer les imports natifs directs de l’UI par des ports de capacités.
-- Ajouter un adaptateur Rust/Tauri pour le système de fichiers; garder un adaptateur navigateur séparé pour le client Web.
+- Tauri 2 reste le shell Linux. Le port `FileSystemPort` et l’adaptateur Tauri sont en place pour le choix et la navigation de dossiers.
+- Lecture de texte bornée en lecture seule : implémentée dans l’adaptateur Tauri avec limite 512 Kio et validation UTF-8 sans octet nul; le parcours reste à valider dans l’application desktop.
+- Créer un adaptateur navigateur indépendant seulement lorsque les capacités Web de fichiers sont évaluées.
 - Définir les limites d’accès à partir d’un dossier choisi. Prévenir traversal, liens symboliques inattendus, lectures excessives et écritures involontaires.
-- Commencer par une navigation réelle de l’arborescence et une lecture explicitement autorisée; ajouter l’écriture seulement avec sauvegarde/confirmation et tests de non-perte.
+- Navigation réelle des sous-dossiers et aperçu borné des fichiers texte : implémentés, mais pas encore validés sur l’application desktop.
+- Ne pas activer l’écriture avant sauvegarde/confirmation et tests de non-perte.
 
 ### 1.2 Git local
 - Définir un port Git indépendant de Tauri et de l’interface.
